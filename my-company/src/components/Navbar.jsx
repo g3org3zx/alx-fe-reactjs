@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav style={{ backgroundColor: 'navy', color: 'white', padding: '10px', textAlign: 'center' }}>
+    <nav style={{ display: "flex",          // Makes links line up in a row
+        justifyContent: "space-around",backgroundColor: 'navy', color: 'white', padding: '10px', textAlign: 'center' }}>
       <Link to="/" style={{ margin: '0 10px', color: 'white', textDecoration: 'none' }}>Home</Link>
       <Link to="/about" style={{ margin: '0 10px', color: 'white', textDecoration: 'none' }}>About</Link>
       <Link to="/services" style={{ margin: '0 10px', color: 'white', textDecoration: 'none' }}>Services</Link>
