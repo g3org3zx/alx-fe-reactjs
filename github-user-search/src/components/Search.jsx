@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { searchUsers } from '../services/githubService';
+import { fetchUserData, searchUsers } from '../services/githubService';
 
 function Search() {
   const [query, setQuery] = useState('');
@@ -19,11 +19,19 @@ function Search() {
     setPage(1);
 
     try {
-      const data = await searchUsers({ query, location, minRepos, page: 1 });
-      setUsers(data.items);
-      setHasMore(data.total_count > page * 30); // GitHub API returns 30 items per page
+      if (!location && !minRepos && query) {
+        // Use fetchUserData for exact username search (Task 1)
+        const data = await fetchUserData(query);
+        setUsers([data]); // Wrap single user in array for consistent rendering
+        setHasMore(false);
+      } else {
+        // Use searchUsers for advanced search (Task 2)
+        const data = await searchUsers({ query, location, minRepos, page: 1 });
+        setUsers(data.items);
+        setHasMore(data.total_count > page * 30);
+      }
     } catch (err) {
-      setError('Looks like we cant find any users');
+      setError(err.message || 'Looks like we cant find any users');
     } finally {
       setLoading(false);
     }
