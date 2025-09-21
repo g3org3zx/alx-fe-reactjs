@@ -1,14 +1,29 @@
 import axios from 'axios';
 
-   const GITHUB_API_URL = import.meta.env.VITE_APP_API_BASE_URL || 'https://api.github.com';
-   const API_KEY = import.meta.env.VITE_APP_GITHUB_API_KEY;
+const GITHUB_API_URL = import.meta.env.VITE_APP_API_BASE_URL || 'https://api.github.com';
+const API_KEY = import.meta.env.VITE_APP_GITHUB_API_KEY;
 
-   export const fetchUserData = async (username) => {
-     try {
-       const headers = API_KEY ? { Authorization: `token ${API_KEY}` } : {};
-       const response = await axios.get(`${GITHUB_API_URL}/users/${username}`, { headers });
-       return response.data;
-     } catch (error) {
-       throw new Error('Looks like we cant find the user');
-     }
-   };
+export const searchUsers = async ({ query, location, minRepos, page = 1 }) => {
+  try {
+    let searchQuery = query ? query : '';
+    if (location) searchQuery += `+location:${location}`;
+    if (minRepos) searchQuery += `+repos:>=${minRepos}`;
+    
+    const headers = API_KEY ? { Authorization: `token ${API_KEY}` } : {};
+    const response = await axios.get(`${GITHUB_API_URL}/search/users?q=${encodeURIComponent(searchQuery)}&page=${page}&per_page=30`, { headers });
+    return response.data;
+  } catch (error) {
+    throw new Error('Looks like we cant find any users');
+  }
+};
+
+// Maintain compatibility with Task 1
+export const fetchUserData = async (username) => {
+  try {
+    const headers = API_KEY ? { Authorization: `token ${API_KEY}` } : {};
+    const response = await axios.get(`${GITHUB_API_URL}/users/${username}`, { headers });
+    return response.data;
+  } catch (error) {
+    throw new Error('Looks like we cant find the user');
+  }
+};
