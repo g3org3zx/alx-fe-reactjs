@@ -10,14 +10,13 @@ export const searchUsers = async ({ query, location, minRepos, page = 1 }) => {
     if (minRepos) searchQuery += `+repos:>=${minRepos}`;
     
     const headers = API_KEY ? { Authorization: `token ${API_KEY}` } : {};
-    const response = await axios.get(`${GITHUB_API_URL}/search/users?q=${encodeURIComponent(searchQuery)}&page=${page}&per_page=30`, { headers });
+    const response = await axios.get(`https://api.github.com/search/users?q=${encodeURIComponent(searchQuery)}&page=${page}&per_page=30`, { headers });
     return response.data;
   } catch (error) {
     throw new Error('Looks like we cant find any users');
   }
 };
 
-// Maintain compatibility with Task 1
 export const fetchUserData = async (username) => {
   try {
     const headers = API_KEY ? { Authorization: `token ${API_KEY}` } : {};
