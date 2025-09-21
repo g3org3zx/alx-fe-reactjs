@@ -1,5 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Search from './components/Search';
+im>
+  );
+}
+
+export default App;port Search from './components/Search';
 import './App.css';
 
 function App() {
@@ -11,8 +15,4 @@ function App() {
           <Route path="/" element={<Search />} />
         </Routes>
       </div>
-    </Router>
-  );
-}
-
-export default App;
+    </Router
