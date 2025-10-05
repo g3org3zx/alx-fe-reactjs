@@ -1,0 +1,15 @@
+{
+  "name": "tailwind-react-integration",
+  "version": "0.1.0",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "@tailwindcss/vite": "^0.0.1"
+  },
+  "scripts": {
+    "dev": "vite"
+  }
+}
